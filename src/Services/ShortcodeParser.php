@@ -143,14 +143,45 @@ class ShortcodeParser
      */
     protected static function autoRegisterComponent(string $name): void
     {
+<<<<<<< Updated upstream
         // If name doesn't contain dots, assume it's in shared components
         if (! Str::contains($name, '.')) {
             $viewPath = "components.shared.{$name}";
         } else {
             $viewPath = $name;
+=======
+        $defaultDir = config('blackpig-component-picker.default_directory', 'richeditor');
+        $fallbackDir = config('blackpig-component-picker.fallback_directory');
+
+        // If name contains dots, it's an explicit path (e.g., 'shared.cta-button')
+        if (Str::contains($name, '.')) {
+            $viewPath = "components.{$name}";
+
+            if (View::exists($viewPath)) {
+                self::registerComponent($name, $viewPath);
+                return;
+            }
+>>>>>>> Stashed changes
         }
 
-        // Check if view exists before registering
+        // Try default directory first (e.g., richeditor/)
+        $viewPath = "components.{$defaultDir}.{$name}";
+        if (View::exists($viewPath)) {
+            self::registerComponent($name, $viewPath);
+            return;
+        }
+
+        // Try fallback directory if configured
+        if ($fallbackDir) {
+            $viewPath = "components.{$fallbackDir}.{$name}";
+            if (View::exists($viewPath)) {
+                self::registerComponent($name, $viewPath);
+                return;
+            }
+        }
+
+        // Try components root as last resort
+        $viewPath = "components.{$name}";
         if (View::exists($viewPath)) {
             self::registerComponent($name, $viewPath);
         }

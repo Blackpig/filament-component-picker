@@ -3,22 +3,26 @@
 namespace Blackpig\FilamentComponentPicker\Actions;
 
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
 class ComponentPickerAction extends Action
 {
     protected array $componentOptions = [];
+
     protected array $componentConfigs = [];
+
     protected array $additionalOptions = [];
+
     protected array $excludedOptions = [];
+
     protected bool $excludeAllDiscovered = false;
+
     protected $excludeCallback = null;
 
     public static function getDefaultName(): ?string
@@ -39,6 +43,7 @@ class ComponentPickerAction extends Action
         $this->form(function () {
             // Initialize options when form is built
             $this->initializeOptions();
+
             return $this->buildForm();
         });
 
@@ -72,7 +77,7 @@ class ComponentPickerAction extends Action
             // Apply callback filter if provided
             if (is_callable($this->excludeCallback)) {
                 $allOptions = array_filter($allOptions, function ($option) {
-                    return !call_user_func($this->excludeCallback, $option);
+                    return ! call_user_func($this->excludeCallback, $option);
                 });
             }
 
@@ -109,18 +114,19 @@ class ComponentPickerAction extends Action
     {
         $this->additionalOptions = array_merge($this->additionalOptions, $options);
         $this->componentOptions = []; // Reset to trigger re-initialization
+
         return $this;
     }
 
     /**
      * Exclude components from the options
      *
-     * @param array|bool|\Closure $options
-     *   - array: Specific components to exclude ['component1', 'component2']
-     *   - true: Exclude ALL auto-discovered components (keeps only config defaults + addOptions)
-     *   - Closure: Callback to filter components fn(string $componentName): bool (return true to exclude)
+     * @param  array|bool|\Closure  $options
+     *                                        - array: Specific components to exclude ['component1', 'component2']
+     *                                        - true: Exclude ALL auto-discovered components (keeps only config defaults + addOptions)
+     *                                        - Closure: Callback to filter components fn(string $componentName): bool (return true to exclude)
      */
-    public function excludeOptions(array|bool|\Closure $options = true): static
+    public function excludeOptions(array | bool | \Closure $options = true): static
     {
         if ($options === true) {
             // Exclude all auto-discovered components
@@ -134,6 +140,7 @@ class ComponentPickerAction extends Action
         }
 
         $this->componentOptions = []; // Reset to trigger re-initialization
+
         return $this;
     }
 
@@ -161,14 +168,14 @@ class ComponentPickerAction extends Action
      */
     protected function autoDiscoverComponents(): array
     {
-        if (!config('blackpig-component-picker.auto_discover', true)) {
+        if (! config('blackpig-component-picker.auto_discover', true)) {
             return [];
         }
 
         $defaultDir = config('blackpig-component-picker.default_directory', 'richeditor');
         $path = resource_path("views/components/{$defaultDir}");
 
-        if (!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             return [];
         }
 
@@ -275,7 +282,7 @@ class ComponentPickerAction extends Action
     {
         $viewPath = $this->resolveComponentPath($componentName);
 
-        if (!File::exists($viewPath)) {
+        if (! File::exists($viewPath)) {
             return ['props' => [], 'supports_class_merge' => false];
         }
 
@@ -343,6 +350,7 @@ class ComponentPickerAction extends Action
         // Return first attempted path if none found (for error handling)
         if (Str::contains($componentName, '.')) {
             $path = str_replace('.', '/', $componentName);
+
             return resource_path("views/components/{$path}.blade.php");
         }
 
@@ -378,10 +386,10 @@ class ComponentPickerAction extends Action
         preg_match_all('/\$([a-zA-Z_][a-zA-Z0-9_]*)->([a-zA-Z_][a-zA-Z0-9_]*)/', $content, $objectMatches);
 
         // Store array access patterns
-        if (!empty($arrayMatches[1])) {
+        if (! empty($arrayMatches[1])) {
             foreach ($arrayMatches[1] as $index => $varName) {
                 $key = $arrayMatches[2][$index];
-                if (!isset($variables[$varName])) {
+                if (! isset($variables[$varName])) {
                     $variables[$varName] = [];
                 }
                 $variables[$varName][] = $key;
@@ -389,10 +397,10 @@ class ComponentPickerAction extends Action
         }
 
         // Store object access patterns
-        if (!empty($objectMatches[1])) {
+        if (! empty($objectMatches[1])) {
             foreach ($objectMatches[1] as $index => $varName) {
                 $key = $objectMatches[2][$index];
-                if (!isset($variables[$varName])) {
+                if (! isset($variables[$varName])) {
                     $variables[$varName] = [];
                 }
                 $variables[$varName][] = $key;
@@ -483,7 +491,7 @@ class ComponentPickerAction extends Action
                 $propConfig['type'] = 'keyvalue';
             }
             // Priority 2: Check if prop has nested structure (array or object with specific keys)
-            elseif (isset($usedVariables[$prop]) && !empty($usedVariables[$prop])) {
+            elseif (isset($usedVariables[$prop]) && ! empty($usedVariables[$prop])) {
                 $propConfig['type'] = 'nested';
                 $propConfig['subfields'] = array_unique($usedVariables[$prop]);
             }
@@ -522,12 +530,13 @@ class ComponentPickerAction extends Action
         }
 
         // Handle nested properties (e.g., cta array with link and label)
-        if ($config['type'] === 'nested' && !empty($config['subfields'])) {
+        if ($config['type'] === 'nested' && ! empty($config['subfields'])) {
             $fields = [];
             foreach ($config['subfields'] as $subfield) {
                 $subfieldName = "{$componentName}_{$prop}_{$subfield}";
                 $fields[] = $this->buildTextField($subfieldName, $subfield, $componentName);
             }
+
             return $fields;
         }
 
@@ -563,7 +572,7 @@ class ComponentPickerAction extends Action
         foreach ($this->componentConfigs as $componentName => $config) {
             if (isset($config['props'])) {
                 foreach ($config['props'] as $prop => $propConfig) {
-                    if ($propConfig['type'] === 'nested' && !empty($propConfig['subfields'])) {
+                    if ($propConfig['type'] === 'nested' && ! empty($propConfig['subfields'])) {
                         foreach ($propConfig['subfields'] as $subfield) {
                             $fields[] = "{$componentName}_{$prop}_{$subfield}";
                         }
@@ -585,7 +594,7 @@ class ComponentPickerAction extends Action
         $componentName = $data['component'];
         $config = $this->componentConfigs[$componentName] ?? null;
 
-        if (!$config) {
+        if (! $config) {
             return;
         }
 
@@ -609,29 +618,29 @@ class ComponentPickerAction extends Action
 
             // Handle key-value array
             if ($propConfig['type'] === 'keyvalue') {
-                if (!empty($data[$fieldName]) && is_array($data[$fieldName])) {
+                if (! empty($data[$fieldName]) && is_array($data[$fieldName])) {
                     // KeyValue component returns array - encode as JSON
                     $attributes[] = sprintf('%s=\'%s\'', $prop, json_encode($data[$fieldName], JSON_UNESCAPED_SLASHES));
                 }
             }
             // Handle nested structure
-            elseif ($propConfig['type'] === 'nested' && !empty($propConfig['subfields'])) {
+            elseif ($propConfig['type'] === 'nested' && ! empty($propConfig['subfields'])) {
                 $nestedValues = [];
                 foreach ($propConfig['subfields'] as $subfield) {
                     $subfieldName = "{$componentName}_{$prop}_{$subfield}";
-                    if (!empty($data[$subfieldName])) {
+                    if (! empty($data[$subfieldName])) {
                         $nestedValues[$subfield] = $data[$subfieldName];
                     }
                 }
 
                 // Encode nested structure as JSON
-                if (!empty($nestedValues)) {
+                if (! empty($nestedValues)) {
                     $attributes[] = sprintf('%s=\'%s\'', $prop, json_encode($nestedValues, JSON_UNESCAPED_SLASHES));
                 }
             }
             // Handle simple field
             else {
-                if (!empty($data[$fieldName])) {
+                if (! empty($data[$fieldName])) {
                     $value = $data[$fieldName];
 
                     // If value is array, encode as JSON
@@ -645,7 +654,7 @@ class ComponentPickerAction extends Action
         }
 
         // Add class attribute if component supports it and class is provided
-        if (($config['supports_class_merge'] ?? false) && !empty($data["{$componentName}_class"])) {
+        if (($config['supports_class_merge'] ?? false) && ! empty($data["{$componentName}_class"])) {
             $attributes[] = sprintf('class="%s"', htmlspecialchars($data["{$componentName}_class"], ENT_QUOTES));
         }
 

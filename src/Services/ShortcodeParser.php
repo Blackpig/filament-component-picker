@@ -2,7 +2,6 @@
 
 namespace Blackpig\FilamentComponentPicker\Services;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
@@ -30,12 +29,12 @@ class ShortcodeParser
             $attributesString = $matches[2] ?? '';
 
             // Auto-register component if not already registered
-            if (!isset(self::$allowedComponents[$componentName])) {
+            if (! isset(self::$allowedComponents[$componentName])) {
                 self::autoRegisterComponent($componentName);
             }
 
             // Check if component is whitelisted
-            if (!isset(self::$allowedComponents[$componentName])) {
+            if (! isset(self::$allowedComponents[$componentName])) {
                 return $matches[0]; // Return original shortcode if not whitelisted
             }
 
@@ -43,7 +42,7 @@ class ShortcodeParser
             $attributes = self::parseAttributes($attributesString);
 
             // Validate component view exists
-            if (!View::exists($componentConfig['path'])) {
+            if (! View::exists($componentConfig['path'])) {
                 return $matches[0]; // Return original shortcode if view doesn't exist
             }
 
@@ -55,6 +54,7 @@ class ShortcodeParser
                     'component' => $componentName,
                     'error' => $e->getMessage(),
                 ]);
+
                 return $matches[0];
             }
         }, $content);
@@ -144,7 +144,7 @@ class ShortcodeParser
     protected static function autoRegisterComponent(string $name): void
     {
         // If name doesn't contain dots, assume it's in shared components
-        if (!Str::contains($name, '.')) {
+        if (! Str::contains($name, '.')) {
             $viewPath = "components.shared.{$name}";
         } else {
             $viewPath = $name;

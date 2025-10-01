@@ -1,8 +1,5 @@
 # Filament Component Picker
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/blackpig/filament-component-picker.svg?style=flat-square)](https://packagist.org/packages/blackpig/filament-component-picker)
-[![Total Downloads](https://img.shields.io/packagist/dt/blackpig/filament-component-picker.svg?style=flat-square)](https://packagist.org/packages/blackpig/filament-component-picker)
-
 A powerful FilamentPHP package that provides a component picker for RichEditor fields with shortcode rendering support. Insert Blade components into rich text content using a visual picker, and render them on your frontend using shortcode syntax.
 
 ## Features
@@ -16,10 +13,25 @@ A powerful FilamentPHP package that provides a component picker for RichEditor f
 
 ## Installation
 
-You can install the package via composer:
+Since this package is not yet available on Packagist, you'll need to install it directly from the GitHub repository.
+
+Add the repository to your `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/blackpig/filament-component-picker"
+        }
+    ]
+}
+```
+
+Then install the package via composer:
 
 ```bash
-composer require blackpig/filament-component-picker
+composer require blackpig/filament-component-picker:dev-main
 ```
 
 You can publish the config file with:

@@ -143,13 +143,6 @@ class ShortcodeParser
      */
     protected static function autoRegisterComponent(string $name): void
     {
-<<<<<<< Updated upstream
-        // If name doesn't contain dots, assume it's in shared components
-        if (! Str::contains($name, '.')) {
-            $viewPath = "components.shared.{$name}";
-        } else {
-            $viewPath = $name;
-=======
         $defaultDir = config('blackpig-component-picker.default_directory', 'richeditor');
         $fallbackDir = config('blackpig-component-picker.fallback_directory');
 
@@ -161,7 +154,6 @@ class ShortcodeParser
                 self::registerComponent($name, $viewPath);
                 return;
             }
->>>>>>> Stashed changes
         }
 
         // Try default directory first (e.g., richeditor/)

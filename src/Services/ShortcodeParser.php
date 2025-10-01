@@ -152,6 +152,7 @@ class ShortcodeParser
 
             if (View::exists($viewPath)) {
                 self::registerComponent($name, $viewPath);
+
                 return;
             }
         }
@@ -160,6 +161,7 @@ class ShortcodeParser
         $viewPath = "components.{$defaultDir}.{$name}";
         if (View::exists($viewPath)) {
             self::registerComponent($name, $viewPath);
+
             return;
         }
 
@@ -168,6 +170,7 @@ class ShortcodeParser
             $viewPath = "components.{$fallbackDir}.{$name}";
             if (View::exists($viewPath)) {
                 self::registerComponent($name, $viewPath);
+
                 return;
             }
         }

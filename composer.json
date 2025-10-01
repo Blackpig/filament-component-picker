@@ -1,29 +1,31 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "blackpig/filament-component-picker",
+    "description": "A powerful FilamentPHP package that provides a component picker for RichEditor fields with shortcode rendering support",
     "keywords": [
-        ":vendor_name",
+        "blackpig",
         "laravel",
-        ":package_slug"
+        "filament",
+        "filament-component-picker",
+        "richieditor",
+        "shortcode",
+        "blade-components"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/blackpig/filament-component-picker",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/blackpig/filament-component-picker/issues",
+        "source": "https://github.com/blackpig/filament-component-picker"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Blackpig",
+            "email": "stuart@blackpig.eu",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -41,13 +43,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Blackpig\\FilamentComponentPicker\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Blackpig\\FilamentComponentPicker\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -67,11 +68,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
+                "Blackpig\\FilamentComponentPicker\\FilamentComponentPickerServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",

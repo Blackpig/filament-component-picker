@@ -1,14 +1,10 @@
 {
     "name": "blackpig/filament-component-picker",
-    "description": "A powerful FilamentPHP package that provides a component picker for RichEditor fields with shortcode rendering support",
+    "description": "Add a component picker to your filament RichEditor fields",
     "keywords": [
         "blackpig",
         "laravel",
-        "filament",
-        "filament-component-picker",
-        "richieditor",
-        "shortcode",
-        "blade-components"
+        "filament-component-picker"
     ],
     "homepage": "https://github.com/blackpig/filament-component-picker",
     "support": {
@@ -43,7 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Blackpig\\FilamentComponentPicker\\": "src/"
+            "Blackpig\\FilamentComponentPicker\\": "src/",
+            "Blackpig\\FilamentComponentPicker\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
@@ -69,7 +66,10 @@
         "laravel": {
             "providers": [
                 "Blackpig\\FilamentComponentPicker\\FilamentComponentPickerServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "FilamentComponentPicker": "Blackpig\\FilamentComponentPicker\\Facades\\FilamentComponentPicker"
+            }
         }
     },
     "minimum-stability": "dev",

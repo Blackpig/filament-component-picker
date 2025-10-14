@@ -25,6 +25,8 @@ class ComponentPickerAction extends Action
 
     protected $excludeCallback = null;
 
+    protected ?string $targetField = null;
+
     public static function getDefaultName(): ?string
     {
         return 'insertComponent';
@@ -48,7 +50,54 @@ class ComponentPickerAction extends Action
         });
 
         $this->action(function (array $data, Set $set, Get $get) {
-            $this->handleInsertion($data, $set, $get);
+            // Ensure options are initialized before handling insertion
+            $this->initializeOptions();
+
+            $componentName = $data['component'];
+            $config = $this->componentConfigs[$componentName] ?? null;
+
+            if (! $config) {
+                \Log::error('ComponentPicker: No config found for component', ['component' => $componentName]);
+
+                return;
+            }
+
+            $shortcode = $this->buildShortcode($componentName, $data, $config);
+
+            \Log::info('ComponentPicker: Built shortcode', [
+                'component' => $componentName,
+                'shortcode' => $shortcode,
+                'data' => $data,
+            ]);
+
+            // Determine target field
+            $fieldName = $this->targetField;
+            if (! $fieldName) {
+                if ($get('content') !== null) {
+                    $fieldName = 'content';
+                } elseif ($get('text') !== null) {
+                    $fieldName = 'text';
+                } else {
+                    $fieldName = 'content';
+                }
+            }
+
+            \Log::info('ComponentPicker: Target field determined', [
+                'field' => $fieldName,
+                'explicit_target' => $this->targetField,
+            ]);
+
+            // Get current content and append shortcode
+            $currentContent = $get($fieldName) ?? '';
+            $newContent = $currentContent . "\n\n" . $shortcode;
+
+            // Set the field value (this updates the backend state)
+            $set($fieldName, $newContent);
+
+            \Log::info('ComponentPicker: Content updated', [
+                'field' => $fieldName,
+                'new_length' => strlen($newContent),
+            ]);
         });
     }
 
@@ -486,6 +535,11 @@ class ComponentPickerAction extends Action
                 'subfields' => [],
             ];
 
+            // Check if prop is optional (has default value via ?? operator)
+            if (preg_match('/\$' . preg_quote($prop, '/') . '\s*\?\?/', $content)) {
+                $propConfig['required'] = false;
+            }
+
             // Priority 1: Check for key-value array usage (like attribution component)
             if ($this->isKeyValueArray($prop, $content)) {
                 $propConfig['type'] = 'keyvalue';
@@ -587,22 +641,13 @@ class ComponentPickerAction extends Action
     }
 
     /**
-     * Handle shortcode insertion
+     * Set the target field name for shortcode insertion
      */
-    protected function handleInsertion(array $data, Set $set, Get $get): void
+    public function targetField(string $fieldName): static
     {
-        $componentName = $data['component'];
-        $config = $this->componentConfigs[$componentName] ?? null;
+        $this->targetField = $fieldName;
 
-        if (! $config) {
-            return;
-        }
-
-        $shortcode = $this->buildShortcode($componentName, $data, $config);
-
-        // Get current content and append shortcode
-        $currentContent = $get('content') ?? '';
-        $set('content', $currentContent . "\n" . $shortcode);
+        return $this;
     }
 
     /**

@@ -50,4 +50,4 @@ jobs:
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/pest tests/ --ci
+        run: vendor/bin/pest --ci

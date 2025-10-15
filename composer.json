@@ -43,7 +43,7 @@
     },
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "test": "./vendor/bin/pest tests/",
+        "test": "./vendor/bin/pest",
         "format": "vendor/bin/pint"
     },
     "config": {

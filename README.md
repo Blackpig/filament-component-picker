@@ -14,7 +14,7 @@ A powerful FilamentPHP package that provides a component picker for RichEditor f
 ## Requirements
 
 - PHP 8.1 or higher
-- Laravel 10.x or 11.x
+- Laravel 10.x, 11.x, or 12.x
 - Filament 3.x
 
 ## Installation

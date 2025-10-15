@@ -2,7 +2,6 @@
 
 use BlackpigCreatif\FilamentComponentPicker\Services\ShortcodeParser;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
 
 beforeEach(function () {
     // Create test component directory

@@ -11,30 +11,21 @@ A powerful FilamentPHP package that provides a component picker for RichEditor f
 - 🎨 **CSS Class Merging** - Supports components with `$attributes->merge()` for custom styling
 - ⚙️ **Highly Configurable** - Customize directories, labels, exclusions, and more
 
+## Requirements
+
+- PHP 8.1 or higher
+- Laravel 10.x or higher
+- Filament 3.x
+
 ## Installation
 
-Since this package is not yet available on Packagist, you'll need to install it directly from the GitHub repository.
-
-Add the repository to your `composer.json`:
-
-```json
-{
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/blackpig/filament-component-picker"
-        }
-    ]
-}
-```
-
-Then install the package via composer:
+Install the package via composer:
 
 ```bash
-composer require blackpig-creatif/filament-component-picker:dev-main
+composer require blackpig-creatif/filament-component-picker
 ```
 
-You can publish the config file with:
+Optionally, you can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="blackpig-creatif-component-picker-config"

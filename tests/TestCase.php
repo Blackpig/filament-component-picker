@@ -1,7 +1,8 @@
 <?php
 
-namespace Filamentphp\FilamentComponentPicker\Tests;
+namespace BlackpigCreatif\FilamentComponentPicker\Tests;
 
+use BlackpigCreatif\FilamentComponentPicker\FilamentComponentPickerServiceProvider;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
@@ -12,7 +13,6 @@ use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Filamentphp\FilamentComponentPicker\FilamentComponentPickerServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -25,7 +25,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Filamentphp\\FilamentComponentPicker\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'BlackpigCreatif\\FilamentComponentPicker\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 

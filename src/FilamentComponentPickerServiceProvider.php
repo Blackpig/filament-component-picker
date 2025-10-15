@@ -1,6 +1,6 @@
 <?php
 
-namespace Blackpig\FilamentComponentPicker;
+namespace BlackpigCreatif\FilamentComponentPicker;
 
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -8,7 +8,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class FilamentComponentPickerServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'blackpig-component-picker';
+    public static string $name = 'blackpig-creatif-component-picker';
 
     public function configurePackage(Package $package): void
     {

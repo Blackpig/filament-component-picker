@@ -22,52 +22,43 @@
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.0",
+        "illuminate/contracts": "^10.0|^11.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^7.9",
-        "nunomaduro/larastan": "^2.0.1",
-        "orchestra/testbench": "^8.0",
+        "orchestra/testbench": "^8.0|^9.0",
         "pestphp/pest": "^2.1",
-        "pestphp/pest-plugin-arch": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0"
+        "pestphp/pest-plugin-laravel": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "Blackpig\\FilamentComponentPicker\\": "src/",
-            "Blackpig\\FilamentComponentPicker\\Database\\Factories\\": "database/factories/"
+            "BlackpigCreatif\\FilamentComponentPicker\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Blackpig\\FilamentComponentPicker\\Tests\\": "tests/"
+            "BlackpigCreatif\\FilamentComponentPicker\\Tests\\": "tests/"
         }
     },
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
+        "test": "./vendor/bin/pest tests/",
         "format": "vendor/bin/pint"
     },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
+            "pestphp/pest-plugin": true
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Blackpig\\FilamentComponentPicker\\FilamentComponentPickerServiceProvider"
+                "BlackpigCreatif\\FilamentComponentPicker\\FilamentComponentPickerServiceProvider"
             ],
             "aliases": {
-                "FilamentComponentPicker": "Blackpig\\FilamentComponentPicker\\Facades\\FilamentComponentPicker"
+                "FilamentComponentPicker": "BlackpigCreatif\\FilamentComponentPicker\\Facades\\FilamentComponentPicker"
             }
         }
     },

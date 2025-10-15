@@ -1,6 +1,6 @@
 <?php
 
-namespace Blackpig\FilamentComponentPicker\Services;
+namespace BlackpigCreatif\FilamentComponentPicker\Services;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -143,8 +143,8 @@ class ShortcodeParser
      */
     protected static function autoRegisterComponent(string $name): void
     {
-        $defaultDir = config('blackpig-component-picker.default_directory', 'richeditor');
-        $fallbackDir = config('blackpig-component-picker.fallback_directory');
+        $defaultDir = config('blackpig-creatif-component-picker.default_directory', 'richeditor');
+        $fallbackDir = config('blackpig-creatif-component-picker.fallback_directory');
 
         // If name contains dots, it's an explicit path (e.g., 'shared.cta-button')
         if (Str::contains($name, '.')) {

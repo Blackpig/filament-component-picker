@@ -17,7 +17,7 @@ class FilamentComponentPickerServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
-                    ->askToStarRepoOnGitHub('blackpig-creatif/filament-component-picker');
+                    ->askToStarRepoOnGitHub('blackpig/filament-component-picker');
             });
     }
 }

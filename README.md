@@ -22,7 +22,7 @@ Add the repository to your `composer.json`:
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/blackpig-creatif/filament-component-picker"
+            "url": "https://github.com/blackpig/filament-component-picker"
         }
     ]
 }

@@ -22,7 +22,7 @@ Add the repository to your `composer.json`:
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/blackpig/filament-component-picker"
+            "url": "https://github.com/blackpig-creatif/filament-component-picker"
         }
     ]
 }
@@ -31,13 +31,13 @@ Add the repository to your `composer.json`:
 Then install the package via composer:
 
 ```bash
-composer require blackpig/filament-component-picker:dev-main
+composer require blackpig-creatif/filament-component-picker:dev-main
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="blackpig-component-picker-config"
+php artisan vendor:publish --tag="blackpig-creatif-component-picker-config"
 ```
 
 This is the contents of the published config file:
@@ -204,7 +204,7 @@ Create Blade components in `resources/views/components/richeditor/`:
 
 namespace App\Filament\Resources;
 
-use Blackpig\FilamentComponentPicker\Actions\ComponentPickerAction;
+use BlackpigCreatif\FilamentComponentPicker\Actions\ComponentPickerAction;
 use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Resource;
 
@@ -232,7 +232,7 @@ class BlogPostResource extends Resource
 ```blade
 {{-- resources/views/blog/show.blade.php --}}
 @php
-    use Blackpig\FilamentComponentPicker\Services\ShortcodeParser;
+    use BlackpigCreatif\FilamentComponentPicker\Services\ShortcodeParser;
 @endphp
 
 <article>

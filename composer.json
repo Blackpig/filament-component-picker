@@ -38,13 +38,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Blackpig\\FilamentComponentPicker\\": "src/",
-            "Blackpig\\FilamentComponentPicker\\Database\\Factories\\": "database/factories/"
+            "BlackpigCreatif\\FilamentComponentPicker\\": "src/",
+            "BlackpigCreatif\\FilamentComponentPicker\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Blackpig\\FilamentComponentPicker\\Tests\\": "tests/"
+            "BlackpigCreatif\\FilamentComponentPicker\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -64,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Blackpig\\FilamentComponentPicker\\FilamentComponentPickerServiceProvider"
+                "BlackpigCreatif\\FilamentComponentPicker\\FilamentComponentPickerServiceProvider"
             ],
             "aliases": {
-                "FilamentComponentPicker": "Blackpig\\FilamentComponentPicker\\Facades\\FilamentComponentPicker"
+                "FilamentComponentPicker": "BlackpigCreatif\\FilamentComponentPicker\\Facades\\FilamentComponentPicker"
             }
         }
     },

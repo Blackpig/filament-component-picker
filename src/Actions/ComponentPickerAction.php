@@ -1,6 +1,6 @@
 <?php
 
-namespace Blackpig\FilamentComponentPicker\Actions;
+namespace BlackpigCreatif\FilamentComponentPicker\Actions;
 
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\KeyValue;
@@ -108,8 +108,8 @@ class ComponentPickerAction extends Action
     {
         if (empty($this->componentOptions)) {
             $discovered = $this->autoDiscoverComponents();
-            $default = config('blackpig-component-picker.default_options', []);
-            $excluded = config('blackpig-component-picker.excluded_components', []);
+            $default = config('blackpig-creatif-component-picker.default_options', []);
+            $excluded = config('blackpig-creatif-component-picker.excluded_components', []);
 
             // Handle exclude all discovered
             if ($this->excludeAllDiscovered) {
@@ -217,11 +217,11 @@ class ComponentPickerAction extends Action
      */
     protected function autoDiscoverComponents(): array
     {
-        if (! config('blackpig-component-picker.auto_discover', true)) {
+        if (! config('blackpig-creatif-component-picker.auto_discover', true)) {
             return [];
         }
 
-        $defaultDir = config('blackpig-component-picker.default_directory', 'richeditor');
+        $defaultDir = config('blackpig-creatif-component-picker.default_directory', 'richeditor');
         $path = resource_path("views/components/{$defaultDir}");
 
         if (! File::isDirectory($path)) {
@@ -299,7 +299,7 @@ class ComponentPickerAction extends Action
      */
     protected function buildComponentLabels(): array
     {
-        $customLabels = config('blackpig-component-picker.component_labels', []);
+        $customLabels = config('blackpig-creatif-component-picker.component_labels', []);
         $labels = [];
 
         foreach ($this->componentOptions as $option) {
@@ -352,8 +352,8 @@ class ComponentPickerAction extends Action
      */
     protected function resolveComponentPath(string $componentName): string
     {
-        $defaultDir = config('blackpig-component-picker.default_directory', 'richeditor');
-        $fallbackDir = config('blackpig-component-picker.fallback_directory');
+        $defaultDir = config('blackpig-creatif-component-picker.default_directory', 'richeditor');
+        $fallbackDir = config('blackpig-creatif-component-picker.fallback_directory');
 
         // If component has dots, it's an explicit path (e.g., 'shared.attribution')
         if (Str::contains($componentName, '.')) {

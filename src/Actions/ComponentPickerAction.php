@@ -2,12 +2,14 @@
 
 namespace BlackpigCreatif\FilamentComponentPicker\Actions;
 
-use Filament\Forms\Components\Actions\Action;
+use Filament\Actions\Action;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
+use Log;
+use Closure;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -57,14 +59,14 @@ class ComponentPickerAction extends Action
             $config = $this->componentConfigs[$componentName] ?? null;
 
             if (! $config) {
-                \Log::error('ComponentPicker: No config found for component', ['component' => $componentName]);
+                Log::error('ComponentPicker: No config found for component', ['component' => $componentName]);
 
                 return;
             }
 
             $shortcode = $this->buildShortcode($componentName, $data, $config);
 
-            \Log::info('ComponentPicker: Built shortcode', [
+            Log::info('ComponentPicker: Built shortcode', [
                 'component' => $componentName,
                 'shortcode' => $shortcode,
                 'data' => $data,
@@ -82,7 +84,7 @@ class ComponentPickerAction extends Action
                 }
             }
 
-            \Log::info('ComponentPicker: Target field determined', [
+            Log::info('ComponentPicker: Target field determined', [
                 'field' => $fieldName,
                 'explicit_target' => $this->targetField,
             ]);
@@ -94,7 +96,7 @@ class ComponentPickerAction extends Action
             // Set the field value (this updates the backend state)
             $set($fieldName, $newContent);
 
-            \Log::info('ComponentPicker: Content updated', [
+            Log::info('ComponentPicker: Content updated', [
                 'field' => $fieldName,
                 'new_length' => strlen($newContent),
             ]);
@@ -170,12 +172,12 @@ class ComponentPickerAction extends Action
     /**
      * Exclude components from the options
      *
-     * @param  array|bool|\Closure  $options
+     * @param array|bool|Closure $options
      *                                        - array: Specific components to exclude ['component1', 'component2']
      *                                        - true: Exclude ALL auto-discovered components (keeps only config defaults + addOptions)
      *                                        - Closure: Callback to filter components fn(string $componentName): bool (return true to exclude)
      */
-    public function excludeOptions(array | bool | \Closure $options = true): static
+    public function excludeOptions(array | bool | Closure $options = true): static
     {
         if ($options === true) {
             // Exclude all auto-discovered components

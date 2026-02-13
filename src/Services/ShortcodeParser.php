@@ -2,6 +2,9 @@
 
 namespace BlackpigCreatif\FilamentComponentPicker\Services;
 
+use Exception;
+use Log;
+use Illuminate\View\ComponentAttributeBag;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
@@ -48,9 +51,9 @@ class ShortcodeParser
 
             try {
                 return self::renderComponent($componentName, $componentConfig, $attributes);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Log error and return original shortcode
-                \Log::error('Shortcode parsing error', [
+                Log::error('Shortcode parsing error', [
                     'component' => $componentName,
                     'error' => $e->getMessage(),
                 ]);
@@ -107,7 +110,7 @@ class ShortcodeParser
         $componentAttributes = $class ? ['class' => $class] : [];
 
         return view($viewPath, $data)
-            ->with('attributes', new \Illuminate\View\ComponentAttributeBag($componentAttributes))
+            ->with('attributes', new ComponentAttributeBag($componentAttributes))
             ->render();
     }
 

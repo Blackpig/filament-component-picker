@@ -12,4 +12,5 @@ phpstan.neon
 testbench.yaml
 vendor
 CLAUDE.md
-
+.cliignore
+/.claude

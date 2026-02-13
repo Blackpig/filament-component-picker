@@ -2,16 +2,16 @@
 
 namespace BlackpigCreatif\FilamentComponentPicker\Actions;
 
-use Filament\Actions\Action;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Log;
 use Closure;
+use Filament\Actions\Action;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Log;
 
 class ComponentPickerAction extends Action
 {
@@ -172,10 +172,10 @@ class ComponentPickerAction extends Action
     /**
      * Exclude components from the options
      *
-     * @param array|bool|Closure $options
-     *                                        - array: Specific components to exclude ['component1', 'component2']
-     *                                        - true: Exclude ALL auto-discovered components (keeps only config defaults + addOptions)
-     *                                        - Closure: Callback to filter components fn(string $componentName): bool (return true to exclude)
+     * @param  array|bool|Closure  $options
+     *                                       - array: Specific components to exclude ['component1', 'component2']
+     *                                       - true: Exclude ALL auto-discovered components (keeps only config defaults + addOptions)
+     *                                       - Closure: Callback to filter components fn(string $componentName): bool (return true to exclude)
      */
     public function excludeOptions(array | bool | Closure $options = true): static
     {

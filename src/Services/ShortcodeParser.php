@@ -70,6 +70,10 @@ class ShortcodeParser
     {
         $attributes = [];
 
+        // Decode HTML entities that rich text editors (e.g. TipTap) encode in text nodes.
+        // This handles cases where `'` becomes `&#039;` and `"` becomes `&quot;`.
+        $attributesString = html_entity_decode($attributesString, ENT_QUOTES | ENT_HTML5);
+
         // Match: key="value" or key='value' (handles JSON in single quotes)
         preg_match_all('/([a-z\-_]+)=(["\'])([^\2]*?)\2/i', $attributesString, $matches, PREG_SET_ORDER);
 

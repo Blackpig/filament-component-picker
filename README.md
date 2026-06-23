@@ -4,18 +4,18 @@ A powerful FilamentPHP package that provides a component picker for RichEditor f
 
 ## Features
 
-- 🎨 **Visual Component Picker** - Add a button to any RichEditor field to insert components
-- 🔍 **Auto-discovery** - Automatically discovers components from configured directories
-- 📝 **Shortcode Rendering** - Parse and render `[component-name attr="value"]` shortcodes on the frontend
-- 🎯 **Smart Type Detection** - Automatically detects component prop types (text, URL, KeyValue, nested objects)
-- 🎨 **CSS Class Merging** - Supports components with `$attributes->merge()` for custom styling
-- ⚙️ **Highly Configurable** - Customize directories, labels, exclusions, and more
+- **Visual Component Picker** - Add a button to any RichEditor field to insert components
+- **Auto-discovery** - Automatically discovers components from configured directories
+- **Shortcode Rendering** - Parse and render `[component-name attr="value"]` shortcodes on the frontend
+- **Smart Type Detection** - Automatically detects component prop types (text, URL, KeyValue, nested objects)
+- **CSS Class Merging** - Supports components with `$attributes->merge()` for custom styling
+- **Highly Configurable** - Customize directories, labels, exclusions, and more
 
 ## Requirements
 
 - PHP 8.2 or higher
 - Laravel 11.x or 12.x
-- Filament 3.x
+- Filament 4.x
 
 ## Installation
 

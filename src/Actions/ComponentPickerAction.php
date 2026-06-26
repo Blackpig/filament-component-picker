@@ -44,7 +44,7 @@ class ComponentPickerAction extends Action
             ->modalHeading('Insert Component Shortcode')
             ->modalSubmitActionLabel('Insert');
 
-        $this->form(function () {
+        $this->schema(function () {
             // Initialize options when form is built
             $this->initializeOptions();
 

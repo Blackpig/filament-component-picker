@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Support\Facades\File;
@@ -44,7 +45,7 @@ class ComponentPickerAction extends Action
             ->modalHeading('Insert Component Shortcode')
             ->modalSubmitActionLabel('Insert');
 
-        $this->form(function () {
+        $this->schema(function () {
             // Initialize options when form is built
             $this->initializeOptions();
 
@@ -555,7 +556,12 @@ class ComponentPickerAction extends Action
             elseif ($this->isListArray($prop, $content)) {
                 $propConfig['type'] = 'repeater';
             }
-            // Priority 4: Detect URL fields by name
+            // Priority 4: Detect boolean fields by name convention
+            elseif ($prop === 'new_tab' || Str::startsWith($prop, ['is_', 'has_', 'open_new'])) {
+                $propConfig['type'] = 'boolean';
+                $propConfig['required'] = false;
+            }
+            // Priority 5: Detect URL fields by name
             elseif (Str::contains($prop, ['url', 'link', 'href'])) {
                 $propConfig['type'] = 'url';
             }
@@ -585,6 +591,14 @@ class ComponentPickerAction extends Action
                 ->valueLabel('Value');
         }
 
+        // Handle boolean (toggle)
+        if ($config['type'] === 'boolean') {
+            return Toggle::make($fieldName)
+                ->label(Str::of($prop)->replace('_', ' ')->title()->toString())
+                ->default(false)
+                ->visible(fn (Get $get) => $get('component') === $componentName);
+        }
+
         // Handle nested properties (e.g., cta array with link and label)
         if ($config['type'] === 'nested' && ! empty($config['subfields'])) {
             $fields = [];
@@ -605,14 +619,19 @@ class ComponentPickerAction extends Action
      */
     protected function buildTextField(string $fieldName, string $label, string $componentName, array $config = []): TextInput
     {
+        $isUrl = ($config['type'] ?? 'text') === 'url' || Str::contains($label, ['url', 'link', 'href']);
+
+        $displayLabel = $isUrl
+            ? 'URL / Path'
+            : Str::of($label)->replace('_', ' ')->title()->toString();
+
         $field = TextInput::make($fieldName)
-            ->label(Str::of($label)->replace('_', ' ')->title()->toString())
+            ->label($displayLabel)
             ->required($config['required'] ?? true)
             ->visible(fn (Get $get) => $get('component') === $componentName);
 
-        // Add URL validation if detected
-        if (($config['type'] ?? 'text') === 'url' || Str::contains($label, ['url', 'link', 'href'])) {
-            $field->url();
+        if ($isUrl) {
+            $field->placeholder('https://example.com or /about');
         }
 
         return $field;
